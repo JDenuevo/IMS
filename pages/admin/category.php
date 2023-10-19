@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+include '../../conn.php';
+
+if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true){
+    header("location: ../../index.php");
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,37 +54,34 @@
                       <h6 class="fw-semibold mb-0">ID</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Assigned</h6>
+                      <h6 class="fw-semibold mb-0">Category Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Product Name</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Priority</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Budget</h6>
+                      <h6 class="fw-semibold mb-0">Action</h6>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
+                <?php
+                    $sql = "SELECT * FROM ims_category";
+                    if($rs=$conn->query($sql)){
+                      $i = 0;
+                        while ($row=$rs->fetch_assoc()) {
+                          $i++;
+                    ?>
                   <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $i; ?></h6></td>
                     <td class="border-bottom-0">
-                        <h6 class="fw-semibold mb-1">Jhemar Denuevo</h6>
-                        <span class="fw-normal">Web Designer</span>                          
+                      <p class="mb-0 fw-normal"><?php echo $row['category_name']; ?></p>
                     </td>
-                    <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal">Jayniella Morente</p>
+                    <td class="border-bottom-0 d-flex align-items-center">
+                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['category_id']; ?>">Update</a>
+                        <a href="functions/delete_category.php?id=<?php echo $row['category_id']; ?>" class="btn btn-sm btn-danger">Delete</a>
                     </td>
-                    <td class="border-bottom-0">
-                      <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                      </div>
-                    </td>
-                    <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
-                    </td>
+                    <?php
+                            }
+                            }
+                          ?>
                   </tr>      
                 </tbody>
               </table>
@@ -93,38 +102,66 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add a Product</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add a Category</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="row g-2">
           <div class="col-md">
+             <form action="functions/add.php" method="post">
             <div class="form-floating">
-              <input type="email" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="mdo@example.com">
-              <label for="floatingInputGrid">Name</label>
-            </div>
-          </div>
-          <div class="col-md">
-            <div class="form-floating">
-              <select class="form-select" id="floatingSelectGrid">
-                <option selected>Category</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-              <label for="floatingSelectGrid">Works with selects</label>
+              <input type="text" name="category_name" class="form-control" id="floatingInputGrid" required>
+              <label for="floatingInputGrid">Category Name</label>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Save</button>
+        <button type="submit" class="btn btn-primary" name="save_category"><i class="ti ti-device-floppy"></i> Save</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
+<?php
+  $sql = "SELECT * FROM ims_category";
+  if($rs=$conn->query($sql)){
+      while ($row=$rs->fetch_assoc()) {
 
+  ?>
+<!-- Update Category -->
+<div class="modal fade" id="update-modal<?php echo $row['category_id']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Category</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-2">
+          <div class="col-md">
+            <form action="functions/update.php" method="post">
+            <div class="form-floating">
+              <input type="hidden" name="category_id" value="<?php echo $row['category_id'] ?>">
+              <input type="text" name="category_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['category_name'] ?>">
+              <label for="floatingInputGrid">Category Name</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" name="update_category"><i class="ti ti-device-floppy"></i> Update</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<?php
+    }
+    }
+  ?>
 
 <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

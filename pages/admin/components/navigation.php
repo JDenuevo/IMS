@@ -67,11 +67,11 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./module.php" aria-expanded="false">
+              <a class="sidebar-link" href="./supplier.php" aria-expanded="false">
                 <span>
                     <i class="ti ti-chart-bar"></i>
                 </span>
-                <span class="hide-menu">Module</span>
+                <span class="hide-menu">Supplier</span>
               </a>
             </li>
             <li class="nav-small-cap">

@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+include '../../conn.php';
+
+if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true){
+    header("location: ../../index.php");
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,40 +51,61 @@
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">ID</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Assigned</h6>
+                      <h6 class="fw-semibold mb-0">Serial ID</h6>
                     </th>
                     <th class="border-bottom-0">
                       <h6 class="fw-semibold mb-0">Product Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Priority</h6>
+                      <h6 class="fw-semibold mb-0">Category</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Budget</h6>
+                      <h6 class="fw-semibold mb-0">Brand</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Supplier</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Warehouse</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Stocks</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Price</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Status</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0">Action</h6>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
+                <?php
+                    $sql = "SELECT * FROM ims_product";
+                    if($rs=$conn->query($sql)){
+                        while ($row=$rs->fetch_assoc()) {
+                    ?>
                   <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0">1</h6></td>
-                    <td class="border-bottom-0">
-                        <h6 class="fw-semibold mb-1">Jhemar Denuevo</h6>
-                        <span class="fw-normal">Web Designer</span>                          
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Serial ID']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Product Name']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Category']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Brand']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Supplier']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Warehouse']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Stocks']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0">₱<?php echo $row['price']; ?></h6></td>
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['isActive']; ?></h6></td>
+                    <td class="border-bottom-0 d-flex align-items-center">
+                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['serial_id']; ?>">Update</a>
+                        <a href="functions/delete_product.php?id=<?php echo $row['serial_id']; ?>" class="btn btn-sm btn-danger">Delete</a>
                     </td>
-                    <td class="border-bottom-0">
-                      <p class="mb-0 fw-normal">Jayniella Morente</p>
-                    </td>
-                    <td class="border-bottom-0">
-                      <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-primary rounded-3 fw-semibold">Low</span>
-                      </div>
-                    </td>
-                    <td class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0 fs-4">$3.9</h6>
-                    </td>
+                    <?php
+                            }
+                            }
+                          ?>
                   </tr>      
                 </tbody>
               </table>
