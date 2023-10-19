@@ -69,9 +69,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                       <h6 class="fw-semibold mb-0">Warehouse</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Stocks</h6>
-                    </th>
-                    <th class="border-bottom-0">
                       <h6 class="fw-semibold mb-0">Price</h6>
                     </th>
                     <th class="border-bottom-0">
@@ -95,7 +92,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Brand']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Supplier']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Warehouse']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['Stocks']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0">₱<?php echo $row['price']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['isActive']; ?></h6></td>
                     <td class="border-bottom-0 d-flex align-items-center">
