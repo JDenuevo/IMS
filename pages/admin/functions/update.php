@@ -7,7 +7,7 @@ if (isset($_POST["update_brand"])) {
     $brand_name = $_POST['brand_name'];
 
     // Update the brand in the database
-    $sql = "UPDATE ims_brand SET brand_name = ? WHERE brand_id = ?";
+    $sql = "UPDATE ims_brands SET brand_name = ? WHERE brand_id = ?";
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters
@@ -27,7 +27,7 @@ elseif (isset($_POST["update_category"])) {
     $category_name = $_POST['category_name'];
 
     // Update the category in the database
-    $sql = "UPDATE ims_category SET category_name = ? WHERE category_id = ?";
+    $sql = "UPDATE ims_categories SET category_name = ? WHERE category_id = ?";
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters
@@ -47,7 +47,7 @@ elseif (isset($_POST["update_warehouse"])) {
     $warehouse_add = $_POST['warehouse_add'];
 
     // Update the warehouse in the database
-    $sql = "UPDATE ims_warehouse SET warehouse_name = ?, warehouse_add = ? WHERE warehouse_id = ?";
+    $sql = "UPDATE ims_warehouses SET warehouse_name = ?, warehouse_add = ? WHERE warehouse_id = ?";
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters with the correct data types
@@ -68,7 +68,7 @@ elseif (isset($_POST["update_supplier"])) {
     $supplier_email = $_POST['supplier_email'];
 
     // Update the supplier in the database
-    $sql = "UPDATE ims_supplier SET supplier_name = ?, supplier_add = ?, supplier_email = ? WHERE supplier_id = ?";
+    $sql = "UPDATE ims_suppliers SET supplier_name = ?, supplier_add = ?, supplier_email = ? WHERE supplier_id = ?";
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters with the correct data types
@@ -81,4 +81,79 @@ elseif (isset($_POST["update_supplier"])) {
         header('Location: ../supplier.php');
     }
 }
+elseif (isset($_POST["update_product"])) {
+    // Get the product details from the form
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['product_name'];
+    $category = isset($_POST['category']) ? $_POST['category'] : null;
+    $brand = isset($_POST['brand']) ? $_POST['brand'] : null;
+    $supplier = isset($_POST['supplier']) ? $_POST['supplier'] : null;
+    $warehouse = $_POST['warehouse'];
+    $status = $_POST['status'];
+
+    // Update the product in the database
+    $sql = "UPDATE ims_products SET 
+            product_name = ?,
+            category = ?,
+            brand = ?,
+            supplier = ?,
+            warehouse = ?,
+            status = ?
+            WHERE product_id = ?";
+
+    $stmt = $conn->prepare($sql);
+
+    // Use bind_param to bind parameters with the correct data types
+    $stmt->bind_param("sssssss", $product_name, $category, $brand, $supplier, $warehouse, $status, $product_id);
+
+    if ($stmt->execute()) {
+        // Successful update
+        $stmt->close();
+        mysqli_close($conn);
+        header('Location: ../product.php');
+    }
+}
+elseif (isset($_POST["update_stocks"])) {
+    // Get the product details from the form
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['product_name'];
+    $stock = $_POST['stock'];
+    $uploadDirectory = 'uploads/';
+    if (!file_exists($uploadDirectory)) {
+        mkdir($uploadDirectory, 0755, true);
+    }
+    // Check if a new image was uploaded
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
+        $temp_name = $_FILES['profile_image']['tmp_name'];
+        $image_name = $_FILES['profile_image']['name'];
+        $new_image_path = $uploadDirectory . $image_name;
+        
+        // Move the uploaded image to the "uploads" folder
+        move_uploaded_file($temp_name, $new_image_path);
+    } else {
+        // No new image was uploaded, so keep the current image path
+        $new_image_path = $src;
+    }
+
+    // Update the product in the database
+    $sql = "UPDATE ims_products SET 
+    product_name = ?,
+    stocks = ?,
+    product_image = ?,
+    last_updated = CONVERT_TZ(NOW(), '+00:00', '-06:00')
+    WHERE product_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $product_name, $stock, $new_image_path, $product_id);
+
+    if ($stmt->execute()) {
+    // Successful update
+    $stmt->close();
+    mysqli_close($conn);
+    header('Location: ../stocks.php');
+    }
+
+}
+
+
 ?>

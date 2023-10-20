@@ -36,6 +36,10 @@
                 <i class="ti ti-mail fs-6"></i>
                 <p class="mb-0 fs-3">My Account</p>
               </a>
+              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                <i class="ti ti-settings fs-6"></i>
+                <p class="mb-0 fs-3">System Modification</p>
+              </a>
               <a href="logout.php" class="btn btn-outline-primary mx-3 mt-2 d-block"><i class="ti ti-logout"></i> Logout</a>
             </div>
           </div>

@@ -63,7 +63,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 </thead>
                 <tbody>
                 <?php
-                    $sql = "SELECT * FROM ims_brand";
+                    $sql = "SELECT * FROM ims_brands";
                     if($rs=$conn->query($sql)){
                       $i = 0;
                         while ($row=$rs->fetch_assoc()) {
@@ -126,7 +126,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 </div>
 
 <?php
-  $sql = "SELECT * FROM ims_brand";
+  $sql = "SELECT * FROM ims_brands";
   if($rs=$conn->query($sql)){
       while ($row=$rs->fetch_assoc()) {
 

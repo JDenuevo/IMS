@@ -79,63 +79,11 @@
               <span class="hide-menu">REPORTS</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./sales.php" aria-expanded="false">
-                <span>
-                <i class="ti ti-currency-dollar"></i>
-                </span>
-                <span class="hide-menu">Sales</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./purchases.php" aria-expanded="false">
-                <span>
-                <i class="ti ti-shopping-cart"></i>
-                </span>
-                <span class="hide-menu">Purchases</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
               <a class="sidebar-link" href="./stocks.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-packages"></i>
                 </span>
                 <span class="hide-menu">Stocks</span>
-              </a>
-            </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">MANAGE</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./orders.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-truck-delivery"></i>
-                </span>
-                <span class="hide-menu">Orders</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./returns.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-truck-return"></i>
-                </span>
-                <span class="hide-menu">Returns</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./contacts.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-address-book"></i>
-                </span>
-                <span class="hide-menu">Contact</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./accounts.php" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-circle"></i>
-                </span>
-                <span class="hide-menu">Account Management</span>
               </a>
             </li>
           </ul>
