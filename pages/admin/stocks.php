@@ -72,7 +72,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 </thead>
                 <tbody>
                 <?php
-                    $sql = "SELECT * FROM ims_products";
+                    $sql = "SELECT * FROM ims_products WHERE status = 'Usable' ORDER BY last_updated DESC";
                     if($rs=$conn->query($sql)){
                         while ($row=$rs->fetch_assoc()) {
                     ?>
