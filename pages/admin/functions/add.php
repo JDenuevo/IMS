@@ -15,7 +15,7 @@ function generateSerialNumber() {
     $randomNumber = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
     
     // Create the serial number
-    $serialNumber = "SN-$year-$month-$day-$randomNumber";
+    $serialNumber = "$year$month$day$randomNumber";
     
     return $serialNumber;
 }
