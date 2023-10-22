@@ -213,11 +213,23 @@ elseif (isset($_POST["update_stocks"])) {
 }
 elseif (isset($_POST["update_account"])) {
     // Get the product details from the form
-    $username = $_POST['username'];
-    $password = md5($_POST['password']);
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
     $privilege = "Administrator";
 
+    $old_profile_picture = $_POST['old_profile_image'];
+    $old_username = trim($_POST['old_username']);
+    $old_password = trim($_POST['old_password']);
+
+    // Generate secure password hashes
+    $password_hashed = $old_password_hashed = null;
+
+    if (!empty($password)) {
+        $password_hashed = md5($password);
+    }
+
     $uploadDirectory = 'uploads/';
+
     if (!file_exists($uploadDirectory)) {
         mkdir($uploadDirectory, 0755, true);
     }
@@ -232,25 +244,92 @@ elseif (isset($_POST["update_account"])) {
         move_uploaded_file($temp_name, $new_image_path);
     } else {
         // No new image was uploaded, so keep the current image path
-        $new_image_path = $src;
+        $new_image_path = $old_profile_picture;
     }
 
-    /// Update the product in the database
-    $sql = "UPDATE ims_login 
-    SET username = ?,
-    password = ?,
-    profile = ?
-    WHERE privilege = ?";
+    // Create an array of the changed fields
+    $changed_fields = [];
+    if ($username != $old_username) {
+        $changed_fields['username'] = $username;
+    }
+    if (!empty($password) && $password_hashed != $old_password_hashed) {
+        $changed_fields['password'] = $password_hashed;
+    }
+    if ($new_image_path != $old_profile_picture) {
+        $changed_fields['profile'] = $new_image_path;
+    }
 
+    // If there are any changed fields, update the product in the database
+    if (!empty($changed_fields)) {
+        $sql = "UPDATE ims_login SET ";
+        $types = '';
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $username, $password, $new_image_path, $privilege);
+        foreach ($changed_fields as $field => $value) {
+            $sql .= "$field = ?, ";
+            $types .= 's'; // Add a corresponding type for each field
+        }
 
-    if ($stmt->execute()) {
-    // Successful update
-    $stmt->close();
-    mysqli_close($conn);
-    header('Location: ../dashboard.php');
+        $sql = rtrim($sql, ', ');
+        $sql .= " WHERE privilege = ?";
+        $types .= 's'; // Add the type for the privilege
+
+        $stmt = $conn->prepare($sql);
+
+        // Create an array of values for binding
+        $values = array_values($changed_fields);
+        $values[] = $privilege; // Add the privilege at the end
+
+        // Combine the types and values arrays and pass them to bind_param
+        $stmt->bind_param($types, ...$values);
+
+        if ($stmt->execute()) {
+            // Successful update
+            $stmt->close();
+            header('Location: ../dashboard.php');
+        }
     }
 }
+elseif (isset($_POST["update_design"])) {
+    $title = trim($_POST['title']);
+    $old_title = trim($_POST['old_title']);
+    $old_logo_default = str_replace('functions/', '', $_POST['old_logo_default']);
+
+
+    $uploadDirectory = 'uploads/';
+    if (!file_exists($uploadDirectory)) {
+        mkdir($uploadDirectory, 0755, true);
+    }
+
+    // Check if a new image was uploaded
+    if (isset($_FILES['profile_image1']) && $_FILES['profile_image1']['error'] == UPLOAD_ERR_OK) {
+        $temp_name = $_FILES['profile_image1']['tmp_name'];
+        $image_name = $_FILES['profile_image1']['name'];
+        $new_image_path = $uploadDirectory . $image_name;
+
+        // Move the uploaded image to the "uploads" folder
+        move_uploaded_file($temp_name, $new_image_path);
+    } else {
+        // No new image was uploaded, so keep the current image path
+        $new_image_path = $old_logo_default;
+    }
+
+    // Check if changes were made before updating
+    if ($title !== $old_title || $new_image_path !== $old_logo_default) {
+        // Update the supplier in the database
+        $sql = "UPDATE ims_designs SET logo = ?, title = ?";
+        $stmt = $conn->prepare($sql);
+
+        // Use bind_param to bind parameters with the correct data types
+        $stmt->bind_param("ss", $new_image_path, $title);
+
+        if ($stmt->execute()) {
+            // Successful update
+            $stmt->close();
+            mysqli_close($conn);
+            header('Location: ../dashboard.php');
+        }
+    }
+}
+
+
 ?>

@@ -8,9 +8,6 @@
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./dashboard.php" class="text-nowrap logo-img">
             <?php include 'logo_display.php'; ?>
-            <div style="display: inline-block; vertical-align: middle;">
-              <label class="fs-6 ms-3 fw-bold">IMS'youu</label>
-            </div>
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>

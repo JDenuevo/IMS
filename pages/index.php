@@ -18,8 +18,32 @@ if (isset($_SESSION["loggedinasadmin"]) && $_SESSION["loggedinasadmin"] == true)
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- <title>IMS - Sign - In</title>
- <link rel="icon" href="../assets/images/logos/ims.png"/>
+<?php
+  $sql5 = "SELECT * FROM ims_designs";
+  $result5 = $conn->query($sql5);
+
+  if ($result5->num_rows > 0) {
+    $row5 = $result5->fetch_assoc();
+    $logo = $row5['logo'];
+    $title = $row5['title'];
+
+        if (!empty($logo)) {
+          // Convert the BLOB data to base64 encoding
+          $logo_default = 'admin/functions/' . $logo;
+      } else {
+          // If the image is not available, show a default image
+          $logo_default = "admin/functions/uploads/default.png";
+      }
+    } else {
+    // If no matching record is found, show a default image
+    $logo_default = "admin/functions/uploads/default.png";
+    }
+?>
+<head>
+    <link rel="icon" href="<?php echo $logo_default; ?>">
+</head>
+
+ <title><?php echo $title; ?> - Sign - In</title>
  <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
 
@@ -35,7 +59,7 @@ if (isset($_SESSION["loggedinasadmin"]) && $_SESSION["loggedinasadmin"] == true)
       <div class="card mb-0">
        <div class="card-body">
         <a href="#" class="text-nowrap logo-img text-center d-block py-3 w-100">
-         <label class="display-1 ms-3 fw-bold">IMS</label>
+         <label class="display-1 ms-3 fw-bold"><?php echo $title; ?></label>
         </a>
         <?php
         // Check if the form was submitted
