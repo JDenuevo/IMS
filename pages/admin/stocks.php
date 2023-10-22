@@ -82,13 +82,13 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                         while ($row=$rs->fetch_assoc()) {
                     ?>
                   <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['product_id']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_id']; ?></h6></td>
                     <td class="border-bottom-0">
                         <img src="<?php echo !empty($row['product_image']) ? 'functions/' . $row['product_image'] : 'functions/uploads/default.png'; ?>" alt="Product Image" width="100" height="100">
                     </td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['stocks']; ?></h6></td>
-                    <td class="border-bottom-0">
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['stocks']; ?></h6></td>
+                    <td class="border-bottom-0 text-center">
                         <h6 class="fw-semibold mb-0" style="color: 
                             <?php
                             $status = $row['status'];
@@ -106,7 +106,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                             <?php echo $status; ?>
                         </h6>
                     </td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php 
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php 
                     // Create a new DateTime object from the last updated string
                     $date = new DateTime($row['last_updated']);
 

@@ -84,13 +84,13 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                         while ($row=$rs->fetch_assoc()) {
                     ?>
                   <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['product_id']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['category']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['brand']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['supplier']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['warehouse']; ?></h6></td>
-                    <td class="border-bottom-0 d-flex align-items-center">
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_id']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['category']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['brand']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['supplier']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['warehouse']; ?></h6></td>
+                    <td class="border-bottom-0 d-flex justify-content-center align-items-center">
                         <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['product_id']; ?>"><i class="ti ti-edit fs-3"></i> Update</a>
                         <a href="functions/delete_product.php?id=<?php echo $row['product_id']; ?>" class="btn btn-sm btn-danger"><i class="ti ti-trash fs-3"></i> Delete</a>
                     </td>

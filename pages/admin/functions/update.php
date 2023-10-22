@@ -211,4 +211,46 @@ elseif (isset($_POST["update_stocks"])) {
         header('Location: ../stocks.php');
     }
 }
+elseif (isset($_POST["update_account"])) {
+    // Get the product details from the form
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
+    $privilege = "Administrator";
+
+    $uploadDirectory = 'uploads/';
+    if (!file_exists($uploadDirectory)) {
+        mkdir($uploadDirectory, 0755, true);
+    }
+
+    // Check if a new image was uploaded
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
+        $temp_name = $_FILES['profile_image']['tmp_name'];
+        $image_name = $_FILES['profile_image']['name'];
+        $new_image_path = $uploadDirectory . $image_name;
+
+        // Move the uploaded image to the "uploads" folder
+        move_uploaded_file($temp_name, $new_image_path);
+    } else {
+        // No new image was uploaded, so keep the current image path
+        $new_image_path = $src;
+    }
+
+    /// Update the product in the database
+    $sql = "UPDATE ims_login 
+    SET username = ?,
+    password = ?,
+    profile = ?
+    WHERE privilege = ?";
+
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $username, $password, $new_image_path, $privilege);
+
+    if ($stmt->execute()) {
+    // Successful update
+    $stmt->close();
+    mysqli_close($conn);
+    header('Location: ../dashboard.php');
+    }
+}
 ?>

@@ -104,10 +104,10 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                           $i++;
                     ?>
                   <tr>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $i; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['subject']; ?></h6></td>
-                    <td class="border-bottom-0 text-wrap"><h6 class="fw-semibold mb-0"><?php echo $row['description']; ?></h6></td>
-                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php 
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $i; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['subject']; ?></h6></td>
+                    <td class="border-bottom-0 text-wrap text-center"><h6 class="fw-semibold mb-0"><?php echo $row['description']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php 
                     $date = new DateTime($row['date_created']);
 
                     // Format the DateTime object to the desired format
