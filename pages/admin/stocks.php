@@ -41,6 +41,8 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
             <div class="d-flex">
               <h5 class="card-title fw-semibold mb-4">Stocks</h5>
               <div class="flex-grow-1"></div>
+              <button class="btn btn-sm btn-secondary me-2"><i class="ti ti-file-export fs-6"></i> Export Excel</button>
+              <button class="btn btn-sm btn-secondary"><i class="ti ti-file-download fs-6"></i> Download PDF</button>
             </div>
             <div class="mb-3">
                 <label for="searchInput" class="form-label">Search:</label>
@@ -117,7 +119,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     echo $formattedDate; ?></h6></td>
                     
                     <td class="border-bottom-0 text-center">
-                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['product_id']; ?>">Update</a>
+                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['product_id']; ?>"><i class="ti ti-edit fs-3"></i> Update</a>
                     </td>
                     <?php
                             }
@@ -233,8 +235,8 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="closeButton" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" name="update_stocks"><i class="ti ti-device-floppy"></i> Update</button>
+        <button type="button" class="btn btn-secondary" id="closeButton" data-bs-dismiss="modal"><i class="ti ti-x fs-3"></i> Close</button>
+        <button type="submit" class="btn btn-primary" name="update_stocks"><i class="ti ti-device-floppy fs-6"></i> Update</button>
       </div>
       </form>
       <script>

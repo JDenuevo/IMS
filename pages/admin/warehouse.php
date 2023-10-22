@@ -42,7 +42,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
               <h5 class="card-title fw-semibold mb-4">Warehouses</h5>
               <div class="flex-grow-1"></div>
               <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="ti ti-square-plus"></i>
+                <i class="ti ti-square-plus fs-6"></i>
                 Add Warehouse
               </button>
             </div>
@@ -81,8 +81,8 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                       <p class="mb-0 fw-normal"><?php echo $row['warehouse_add']; ?></p>
                     </td>
                     <td class="border-bottom-0 d-flex align-items-center">
-                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['warehouse_id']; ?>">Update</a>
-                        <a href="functions/delete_warehouse.php?id=<?php echo $row['warehouse_id']; ?>" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['warehouse_id']; ?>"><i class="ti ti-edit fs-3"></i> Update</a>
+                        <a href="functions/delete_warehouse.php?id=<?php echo $row['warehouse_id']; ?>" class="btn btn-sm btn-danger"><i class="ti ti-trash fs-3"></i> Delete</a>
                     </td>
                     <?php
                             }
@@ -127,8 +127,8 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" name="save_warehouse"><i class="ti ti-device-floppy"></i> Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ti ti-x fs-3"></i> Close</button>
+        <button type="submit" class="btn btn-primary" name="save_warehouse"><i class="ti ti-device-floppy fs-3"></i> Save</button>
       </div>
       </form>
     </div>
@@ -165,8 +165,8 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" name="update_warehouse"><i class="ti ti-device-floppy"></i> Update</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="ti ti-x fs-3"></i> Close</button>
+        <button type="submit" class="btn btn-primary" name="update_warehouse"><i class="ti ti-device-floppy fs-3"></i> Update</button>
       </div>
       </form>
     </div>

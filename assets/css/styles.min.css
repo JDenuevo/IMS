@@ -1,14 +1,15 @@
-@charset "UTF-8";@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"); /*!
- * Bootstrap  v5.3.0-alpha1 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
-@import "../libs/simplebar/dist/simplebar.css";@import "../css/icons/tabler-icons/tabler-icons.css";:root,[data-bs-theme=light] {
+@charset "UTF-8";@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap");
+
+@import "../libs/simplebar/dist/simplebar.css";
+
+@import "../css/icons/tabler-icons/tabler-icons.css";
+
+    :root,[data-bs-theme=light] {
     --bs-blue: #5D87FF;
     --bs-indigo: #6610f2;
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
-    --bs-red: #FA896B;
+    --bs-red: #FF6961;
     --bs-orange: #fd7e14;
     --bs-yellow: #FFAE1F;
     --bs-green: #13DEB9;
@@ -32,7 +33,7 @@
     --bs-success: #13DEB9;
     --bs-info: #539BFF;
     --bs-warning: #FFAE1F;
-    --bs-danger: #FA896B;
+    --bs-danger: #FF6961;
     --bs-light: #F6F9FC;
     --bs-dark: #2A3547;
     --bs-muted: #5A6A85;
@@ -3885,15 +3886,15 @@ textarea.form-control-lg {
 
 .btn-danger {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #FA896B;
-    --bs-btn-border-color: #FA896B;
+    --bs-btn-bg: #FF6961;
+    --bs-btn-border-color: #FF6961;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #d5745b;
-    --bs-btn-hover-border-color: #c86e56;
+    --bs-btn-hover-bg: #d3544e;
+    --bs-btn-hover-border-color: #cc534d;
     --bs-btn-focus-shadow-rgb: 251,155,129;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #c86e56;
-    --bs-btn-active-border-color: #bc6750;
+    --bs-btn-active-bg: #cc534d;
+    --bs-btn-active-border-color: #d3544e;
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #FA896B;
