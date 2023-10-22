@@ -1,4 +1,5 @@
 <!--  Header Start -->
+
 <header class="app-header">
   <nav class="navbar navbar-expand-lg navbar-light">
     <ul class="navbar-nav">
@@ -17,11 +18,11 @@
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
             <div class="message-body">
-              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#update-modal">
                 <i class="ti ti-mail fs-6"></i>
                 <p class="mb-0 fs-3">My Account</p>
               </a>
-              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+              <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item" data-bs-toggle="modal" data-bs-target="#update-system">
                 <i class="ti ti-settings fs-6"></i>
                 <p class="mb-0 fs-3">System Modification</p>
               </a>
@@ -30,6 +31,38 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div class="modal fade" id="update-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update-modal-label">Update My Account</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="update-system" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update-modal-label">Update System</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

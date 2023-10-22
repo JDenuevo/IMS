@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <title>IMS - Stocks</title>
 
-  <link rel="icon" href="../../assets/images/logos/ims.png">
+  <?php include 'components/icon.php'; ?>
 
   <!-- Main Template -->
   <link rel="stylesheet" href="../../assets/css/styles.min.css">
@@ -51,28 +51,31 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Serial ID</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Serial ID</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Image</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Image</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Product Name</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Product Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Stocks</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Stocks</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Last Updated</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Status</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Action</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Last Updated</h6>
+                    </th>
+                    <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0 text-center">Action</h6>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                 <?php
-                    $sql = "SELECT * FROM ims_products WHERE status = 'Usable' ORDER BY last_updated DESC";
+                    $sql = "SELECT * FROM ims_products ORDER BY last_updated DESC";
                     if($rs=$conn->query($sql)){
                         while ($row=$rs->fetch_assoc()) {
                     ?>
@@ -83,6 +86,24 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     </td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['stocks']; ?></h6></td>
+                    <td class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0" style="color: 
+                            <?php
+                            $status = $row['status'];
+                            if ($status === 'Usable') {
+                                echo 'green';
+                            } elseif ($status === 'Defective') {
+                                echo 'orange';
+                            } elseif ($status === 'Inactive') {
+                                echo 'red';
+                            } else {
+                                echo 'black'; // Default color if none of the conditions match
+                            }
+                            ?>;
+                        ">
+                            <?php echo $status; ?>
+                        </h6>
+                    </td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php 
                     // Create a new DateTime object from the last updated string
                     $date = new DateTime($row['last_updated']);
@@ -94,6 +115,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     $formattedDate = $date->format('F j, Y'.' @ '.'h:i A');
 
                     echo $formattedDate; ?></h6></td>
+                    
                     <td class="border-bottom-0 text-center">
                         <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['product_id']; ?>">Update</a>
                     </td>
@@ -192,9 +214,21 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
             </script>
 
             <div class="form-floating mt-2">
+                <input type="number" name="old_stock" min="0" step="1" class="form-control" id="floatingInputGrid" value="<?php echo $row['stocks']; ?>" readonly hidden>
                 <input type="number" name="stock" min="0" step="1" class="form-control" id="floatingInputGrid" value="<?php echo $row['stocks']; ?>">
                 <label for="floatingInputGrid">Stocks</label>
             </div>
+
+            <div class="form-floating mt-2">
+            <input type="text" name="old_status" class="form-control" id="floatingInputGrid1" value="<?php echo $ims_status; ?>" readonly hidden>
+              <select name="status" class="form-select" id="statusSelect" required>
+                      <option value="" disabled>Select a status</option>
+                      <option value="Usable" <?= $ims_status === 'Usable' ? 'selected' : '' ?>>Usable</option>
+                      <option value="Defective" <?= $ims_status === 'Defective' ? 'selected' : '' ?>>Defective</option>
+                      <option value="Inactive" <?= $ims_status === 'Inactive' ? 'selected' : '' ?>>Inactive</option>
+                  </select>
+                <label for="statusSelect">Status</label>
+              </div>
           </div>
         </div>
       </div>

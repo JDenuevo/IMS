@@ -7,9 +7,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./dashboard.php" class="text-nowrap logo-img">
-            <div style="display: inline-block; vertical-align: middle;">
-              <img src="../../assets/images/logos/ims.png" alt="" class="img-fluid ms-4" style="max-height: 50px; max-width: 50px; vertical-align: middle;"/>
-            </div>
+            <?php include 'logo_display.php'; ?>
             <div style="display: inline-block; vertical-align: middle;">
               <label class="fs-6 ms-3 fw-bold">IMS'youu</label>
             </div>

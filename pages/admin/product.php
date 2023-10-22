@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <title>IMS - Product</title>
 
-  <link rel="icon" href="../../assets/images/logos/ims.png">
+  <?php include 'components/icon.php'; ?>
 
   <!-- Main Template -->
   <link rel="stylesheet" href="../../assets/css/styles.min.css">
@@ -55,28 +55,25 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Serial ID</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Serial ID</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Product Name</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Product Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Category</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Category</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Brand</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Brand</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Supplier</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Supplier</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Warehouse</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Warehouse</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Status</h6>
-                    </th>
-                    <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Action</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Action</h6>
                     </th>
                   </tr>
                 </thead>
@@ -93,24 +90,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['brand']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['supplier']; ?></h6></td>
                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0"><?php echo $row['warehouse']; ?></h6></td>
-                    <td class="border-bottom-0">
-                        <h6 class="fw-semibold mb-0" style="color: 
-                            <?php
-                            $status = $row['status'];
-                            if ($status === 'Usable') {
-                                echo 'green';
-                            } elseif ($status === 'Defective') {
-                                echo 'orange';
-                            } elseif ($status === 'Inactive') {
-                                echo 'red';
-                            } else {
-                                echo 'black'; // Default color if none of the conditions match
-                            }
-                            ?>;
-                        ">
-                            <?php echo $status; ?>
-                        </h6>
-                    </td>
                     <td class="border-bottom-0 d-flex align-items-center">
                         <a href="" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#update-modal<?php echo $row['product_id']; ?>">Update</a>
                         <a href="functions/delete_product.php?id=<?php echo $row['product_id']; ?>" class="btn btn-sm btn-danger">Delete</a>
@@ -210,15 +189,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 </select>
                 <label for="warehouseSelect">Warehouse</label>
               </div>
-              <div class="form-floating mt-2">
-                <select name="status" class="form-select" id="statusSelect" required>
-                  <option value="" disabled selected>Select a status</option>
-                  <option value="Usable">Usable</option>
-                  <option value="Defective">Defective</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-                <label for="statusSelect">Status</label>
-              </div>
           </div>
         </div>
       </div>
@@ -235,7 +205,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
   $sql = "SELECT * FROM ims_products";
   if($rs=$conn->query($sql)){
       while ($row=$rs->fetch_assoc()) {
-        $ims_status = $row["status"];
 
   ?>
 <!-- Update product -->
@@ -255,6 +224,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <label for="floatingInputGrid1">Product ID</label>
             </div>
             <div class="form-floating mt-2">
+                <input type="text" name="old_product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>" readonly hidden>
                 <input type="text" name="product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>" required>
                 <label for="floatingInputGrid">Product Name</label>
               </div>
@@ -354,15 +324,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     ?>
                 </select>
                 <label for="warehouseSelect">Warehouse</label>
-              </div>
-              <div class="form-floating mt-2">
-              <select name="status" class="form-select" id="statusSelect" required>
-                      <option value="" disabled>Select a status</option>
-                      <option value="Usable" <?= $ims_status === 'Usable' ? 'selected' : '' ?>>Usable</option>
-                      <option value="Defective" <?= $ims_status === 'Defective' ? 'selected' : '' ?>>Defective</option>
-                      <option value="Inactive" <?= $ims_status === 'Inactive' ? 'selected' : '' ?>>Inactive</option>
-                  </select>
-                <label for="statusSelect">Status</label>
               </div>
           </div>
         </div>

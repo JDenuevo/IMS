@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <title>IMS - Warehouse</title>
 
-  <link rel="icon" href="../../assets/images/logos/ims.png">
+  <?php include 'components/icon.php'; ?>
 
   <!-- Main Template -->
   <link rel="stylesheet" href="../../assets/css/styles.min.css">
@@ -51,16 +51,16 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">ID</h6>
+                      <h6 class="fw-semibold mb-0 text-center">ID</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Warehouse Name</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Warehouse Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Warehouse Address</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Warehouse Address</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Action</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Action</h6>
                     </th>
                   </tr>
                 </thead>
@@ -77,7 +77,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     <td class="border-bottom-0">
                       <p class="mb-0 fw-normal"><?php echo $row['warehouse_name']; ?></p>
                     </td>
-                    <td class="border-bottom-0">
+                    <td class="border-bottom-0 text-wrap">
                       <p class="mb-0 fw-normal"><?php echo $row['warehouse_add']; ?></p>
                     </td>
                     <td class="border-bottom-0 d-flex align-items-center">

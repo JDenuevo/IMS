@@ -1,5 +1,6 @@
 <?php
 include '../../../conn.php';
+date_default_timezone_set('Asia/Manila');
 
 if (isset($_POST["update_brand"])) {
     // Get the new brand name and brand_id from the form
@@ -81,6 +82,7 @@ elseif (isset($_POST["update_supplier"])) {
         header('Location: ../supplier.php');
     }
 }
+
 elseif (isset($_POST["update_product"])) {
     // Get the product details from the form
     $product_id = $_POST['product_id'];
@@ -89,7 +91,25 @@ elseif (isset($_POST["update_product"])) {
     $brand = isset($_POST['brand']) ? $_POST['brand'] : null;
     $supplier = isset($_POST['supplier']) ? $_POST['supplier'] : null;
     $warehouse = $_POST['warehouse'];
-    $status = $_POST['status'];
+
+    $old_product_name = isset($_POST['old_product_name']) ? $_POST['old_product_name'] : null;
+    $subject = "Updated a Product";
+
+    // Check if the product name has changed
+    if ($old_product_name !== $product_name) {
+        $description = "Changed the product named " . $old_product_name . " to " . $product_name;
+
+        $date_created = date('Y-m-d H:i:s');
+
+        // Create a prepared statement for inserting a log
+        $sql1 = "INSERT INTO ims_logs (subject, description, date_created) VALUES (?, ?, ?)";
+        $stmt1 = $conn->prepare($sql1);
+        $stmt1->bind_param("sss", $subject, $description, $date_created);
+
+        // Execute the log insertion query
+        $stmt1->execute();
+        $stmt1->close();
+    }
 
     // Update the product in the database
     $sql = "UPDATE ims_products SET 
@@ -97,14 +117,13 @@ elseif (isset($_POST["update_product"])) {
             category = ?,
             brand = ?,
             supplier = ?,
-            warehouse = ?,
-            status = ?
+            warehouse = ?
             WHERE product_id = ?";
 
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters with the correct data types
-    $stmt->bind_param("sssssss", $product_name, $category, $brand, $supplier, $warehouse, $status, $product_id);
+    $stmt->bind_param("ssssss", $product_name, $category, $brand, $supplier, $warehouse, $product_id);
 
     if ($stmt->execute()) {
         // Successful update
@@ -113,21 +132,59 @@ elseif (isset($_POST["update_product"])) {
         header('Location: ../product.php');
     }
 }
+
 elseif (isset($_POST["update_stocks"])) {
     // Get the product details from the form
     $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
     $stock = $_POST['stock'];
+    $status = $_POST['status'];
+
+    $old_stock = $_POST['old_stock'];
+    $old_status = $_POST['old_status'];
+
+    $changesDetected = false; // Flag to track changes
+
+    $description = "Product ID: " . $product_id . "<br>" . "Product Name: " . $product_name . "<br>"; // Start with a newline
+
+    // Check for changes in stocks
+    if ($old_stock !== $stock) {
+        $description .= "Stock: from $old_stock to $stock" . "<br>"; // Newline after stock change
+        $changesDetected = true;
+    }
+
+    // Check for changes in status
+    if ($old_status !== $status) {
+        $description .= "Status: from $old_status to $status" . "<br>"; // Newline after status change
+        $changesDetected = true;
+    }
+
+    // Create a log entry only if changes are detected
+    if ($changesDetected) {
+        $subject = "Updated a Product";
+        $date_created = date('Y-m-d H:i:s');
+
+        // Create a prepared statement for inserting a log
+        $sql1 = "INSERT INTO ims_logs (subject, description, date_created) VALUES (?, ?, ?)";
+        $stmt1 = $conn->prepare($sql1);
+        $stmt1->bind_param("sss", $subject, $description, $date_created);
+
+        // Execute the log insertion query
+        $stmt1->execute();
+        $stmt1->close();
+    }
+
     $uploadDirectory = 'uploads/';
     if (!file_exists($uploadDirectory)) {
         mkdir($uploadDirectory, 0755, true);
     }
+
     // Check if a new image was uploaded
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
         $temp_name = $_FILES['profile_image']['tmp_name'];
         $image_name = $_FILES['profile_image']['name'];
         $new_image_path = $uploadDirectory . $image_name;
-        
+
         // Move the uploaded image to the "uploads" folder
         move_uploaded_file($temp_name, $new_image_path);
     } else {
@@ -140,20 +197,18 @@ elseif (isset($_POST["update_stocks"])) {
     product_name = ?,
     stocks = ?,
     product_image = ?,
+    status = ?,
     last_updated = CONVERT_TZ(NOW(), '+00:00', '-06:00')
     WHERE product_id = ?";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $product_name, $stock, $new_image_path, $product_id);
+    $stmt->bind_param("sssss", $product_name, $stock, $new_image_path, $status, $product_id);
 
     if ($stmt->execute()) {
-    // Successful update
-    $stmt->close();
-    mysqli_close($conn);
-    header('Location: ../stocks.php');
+        // Successful update
+        $stmt->close();
+        mysqli_close($conn);
+        header('Location: ../stocks.php');
     }
-
 }
-
-
 ?>

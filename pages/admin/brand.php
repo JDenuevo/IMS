@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <title>IMS - Brand</title>
 
-  <link rel="icon" href="../../assets/images/logos/ims.png">
+  <?php include 'components/icon.php'; ?>
 
   <!-- Main Template -->
   <link rel="stylesheet" href="../../assets/css/styles.min.css">
@@ -51,13 +51,13 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <thead class="text-dark fs-4">
                   <tr>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">ID</h6>
+                      <h6 class="fw-semibold mb-0 text-center">ID</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Brand Name</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Brand Name</h6>
                     </th>
                     <th class="border-bottom-0">
-                      <h6 class="fw-semibold mb-0">Action</h6>
+                      <h6 class="fw-semibold mb-0 text-center">Action</h6>
                     </th>
                   </tr>
                 </thead>
