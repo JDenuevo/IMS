@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <?php include 'components/icon.php'; ?>
 
-  <title><?php echo $title; ?> - Supplier</title>
+  <title><?php echo $title; ?> - Suppliers</title>
 
   <!-- Main Template -->
   <link rel="stylesheet" href="../../assets/css/styles.min.css">

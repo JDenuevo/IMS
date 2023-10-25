@@ -19,7 +19,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
 
   <?php include 'components/icon.php'; ?>
 
-  <title><?php echo $title; ?> - Product</title>
+  <title><?php echo $title; ?> - Products</title>
 
 
 
@@ -63,6 +63,9 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                       <h6 class="fw-semibold mb-0 text-center">Product Name</h6>
                     </th>
                     <th class="border-bottom-0">
+                      <h6 class="fw-semibold mb-0 text-center">Description</h6>
+                    </th>
+                    <th class="border-bottom-0">
                       <h6 class="fw-semibold mb-0 text-center">Category</h6>
                     </th>
                     <th class="border-bottom-0">
@@ -88,6 +91,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                   <tr>
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_id']; ?></h6></td>
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_name']; ?></h6></td>
+                    <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['product_description']; ?></h6></td>
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['category']; ?></h6></td>
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['brand']; ?></h6></td>
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php echo $row['supplier']; ?></h6></td>
@@ -130,6 +134,10 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
               <div class="form-floating">
                 <input type="text" name="product_name" class="form-control" id="floatingInputGrid" required>
                 <label for="floatingInputGrid">Product Name</label>
+              </div>
+              <div class="form-floating mt-2">
+                <input type="textarea" name="product_description" class="form-control" id="floatingInputGrid" required>
+                <label for="floatingInputGrid">Description</label>
               </div>
               <div class="form-floating mt-2">
                 <select name="category" class="form-select" id="categorySelect">
@@ -226,9 +234,13 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                 <label for="floatingInputGrid1">Product ID</label>
             </div>
             <div class="form-floating mt-2">
-                <input type="text" name="old_product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>" readonly hidden>
+                <input type="hidden" name="old_product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>">
                 <input type="text" name="product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>" required>
                 <label for="floatingInputGrid">Product Name</label>
+              </div>
+              <div class="form-floating mt-2">
+                <input type="textarea" name="product_description" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_description']; ?>" required>
+                <label for="floatingInputGrid">Description</label>
               </div>
               <div class="form-floating mt-2">
               <select name="category" class="form-select" id="categorySelect">

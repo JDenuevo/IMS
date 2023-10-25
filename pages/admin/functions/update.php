@@ -87,6 +87,7 @@ elseif (isset($_POST["update_product"])) {
     // Get the product details from the form
     $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
+    $product_description = $_POST['product_description'];
     $category = isset($_POST['category']) ? $_POST['category'] : null;
     $brand = isset($_POST['brand']) ? $_POST['brand'] : null;
     $supplier = isset($_POST['supplier']) ? $_POST['supplier'] : null;
@@ -114,6 +115,7 @@ elseif (isset($_POST["update_product"])) {
     // Update the product in the database
     $sql = "UPDATE ims_products SET 
             product_name = ?,
+            product_description = ?,
             category = ?,
             brand = ?,
             supplier = ?,
@@ -123,7 +125,7 @@ elseif (isset($_POST["update_product"])) {
     $stmt = $conn->prepare($sql);
 
     // Use bind_param to bind parameters with the correct data types
-    $stmt->bind_param("ssssss", $product_name, $category, $brand, $supplier, $warehouse, $product_id);
+    $stmt->bind_param("sssssss", $product_name, $product_description, $category, $brand, $supplier, $warehouse, $product_id);
 
     if ($stmt->execute()) {
         // Successful update
@@ -139,6 +141,9 @@ elseif (isset($_POST["update_stocks"])) {
     $product_name = $_POST['product_name'];
     $stock = $_POST['stock'];
     $status = $_POST['status'];
+    $product_description = $_POST['product_description'];
+    $src = "uploads/default.png";
+    $date_updated = date('Y-m-d H:i:s');
 
     $old_stock = $_POST['old_stock'];
     $old_status = $_POST['old_status'];
@@ -191,26 +196,37 @@ elseif (isset($_POST["update_stocks"])) {
         // No new image was uploaded, so keep the current image path
         $new_image_path = $src;
     }
-
+    
     // Update the product in the database
     $sql = "UPDATE ims_products SET 
     product_name = ?,
     stocks = ?,
     product_image = ?,
     status = ?,
-    last_updated = CONVERT_TZ(NOW(), '+00:00', '-06:00')
+    last_updated = ?
     WHERE product_id = ?";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $product_name, $stock, $new_image_path, $status, $product_id);
+    $stmt->bind_param("ssssss", $product_name, $stock, $new_image_path, $status, $date_updated, $product_id);
 
-    if ($stmt->execute()) {
-        // Successful update
-        $stmt->close();
-        mysqli_close($conn);
-        header('Location: ../stocks.php');
+    // Execute $sql3 (ims_stocks insert) only if changes are detected in stocks
+    if ($stmt->execute() && $changesDetected) {
+        // Prepare and execute $sql3
+        $sql3 = "INSERT INTO ims_stocks (product_id, product_image, product_name, product_description, stocks, last_updated, status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt3 = $conn->prepare($sql3);
+        $stmt3->bind_param("sssssss", $product_id, $new_image_path, $product_name, $product_description, $stock, $date_updated, $status);
+        
+        $stmt3->execute();
+        $stmt3->close();
     }
+
+    $stmt->close();
+    mysqli_close($conn);
+    header('Location: ../stocks.php');
 }
+
+
 elseif (isset($_POST["update_account"])) {
     // Get the product details from the form
     $username = trim($_POST['username']);

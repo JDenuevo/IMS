@@ -44,7 +44,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
               <h5 class="card-title fw-semibold mb-4">Stocks</h5>
               <div class="flex-grow-1"></div>
               <button class="btn btn-sm btn-secondary me-2"><i class="ti ti-file-export fs-6"></i> Export Excel</button>
-              <button class="btn btn-sm btn-secondary"><i class="ti ti-file-download fs-6"></i> Download PDF</button>
+              <a href="functions/download_pdf.php" target="_blank" class="btn btn-sm btn-secondary"><i class="ti ti-file-download fs-6"></i> Download PDF</a>
             </div>
             <div class="mb-3">
                 <label for="searchInput" class="form-label">Search:</label>
@@ -111,10 +111,6 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
                     <td class="border-bottom-0 text-center"><h6 class="fw-semibold mb-0"><?php 
                     // Create a new DateTime object from the last updated string
                     $date = new DateTime($row['last_updated']);
-
-                    // Set the timezone of the DateTime object to Manila
-                    $date->setTimezone(new DateTimeZone('Asia/Manila'));
-
                     // Format the DateTime object to the desired format
                     $formattedDate = $date->format('F j, Y'.' @ '.'h:i A');
 
@@ -147,6 +143,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
       while ($row=$rs->fetch_assoc()) {
         $ims_status = $row["status"];
         $id = $row["product_id"];
+        $product_description = $row["product_description"];
 
   ?>
 <!-- Update product -->
@@ -166,6 +163,7 @@ if(!isset($_SESSION["loggedinasadmin"]) || $_SESSION["loggedinasadmin"] !== true
             </div>
             <div class="form-floating mt-2">
                 <input type="text" name="product_name" class="form-control" id="floatingInputGrid" value="<?php echo $row['product_name']; ?>" readonly>
+                <input type="hidden" name="product_description" class="form-control" id="floatingInputGrid" value="<?php echo $product_description; ?>" readonly>
                 <label for="floatingInputGrid">Product Name</label>
             </div>
                 <?php

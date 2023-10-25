@@ -130,18 +130,20 @@ elseif (isset($_POST["save_product"])) {
 
     // Sanitize user inputs to prevent SQL injection
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+    $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
     $category = isset($_POST['category']) ? mysqli_real_escape_string($conn, $_POST['category']) : null;
     $brand = isset($_POST['brand']) ? mysqli_real_escape_string($conn, $_POST['brand']) : null;
     $supplier = isset($_POST['supplier']) ? mysqli_real_escape_string($conn, $_POST['supplier']) : null;
     $warehouse = mysqli_real_escape_string($conn, $_POST['warehouse']);
     $status = "Usable";
+    $date_created = date('Y-m-d H:i:s');
 
     // Generate a serial number
     $product_id = generateSerialNumber(); // Ensure this function is defined
 
     // Create prepared statements for product and log
-    $productSql = "INSERT INTO ims_products (product_id, product_name, category, brand, supplier, warehouse, status, last_updated) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, CONVERT_TZ(NOW(), '+00:00', '-06:00'))";
+    $productSql = "INSERT INTO ims_products (product_id, product_name, product_description, category, brand, supplier, warehouse, status, last_updated) 
+            VALUES (?, ?,?, ?, ?, ?, ?, ?, ?)";
     
     $logSql = "INSERT INTO ims_logs (subject, description, date_created) VALUES (?, ?, NOW())";
 
@@ -150,7 +152,7 @@ elseif (isset($_POST["save_product"])) {
 
     if ($productStmt && $logStmt) {
         // Bind parameters and execute the product query
-        mysqli_stmt_bind_param($productStmt, "sssssss", $product_id, $product_name, $category, $brand, $supplier, $warehouse, $status);
+        mysqli_stmt_bind_param($productStmt, "sssssssss", $product_id, $product_name, $product_description, $category, $brand, $supplier, $warehouse, $status, $date_created);
         if (mysqli_stmt_execute($productStmt)) {
             // Product inserted successfully
 

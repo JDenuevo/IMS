@@ -101,6 +101,9 @@ if (isset($_SESSION["loggedinasadmin"]) && $_SESSION["loggedinasadmin"] == true)
            </div>
            <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" name="login">Sign In</button>
          </form>
+         <div class="text-center">
+          <a href="user/">Sign in as User</a>
+        </div>
        </div>
       </div>
      </div>
